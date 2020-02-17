@@ -15,11 +15,12 @@ Github_username: Madhous<br>
 ### Prérequis
 
 - Docker
-> Pour l'installer : [Docker](https://docs.docker.com/install/)
 - Docker Compose
+> Pour l'installer : [Docker](https://docs.docker.com/install/)
+
 - Nodejs
 > Pour l'installer : [NodeJS](https://nodejs.org/en/download/)
-- PowerShell (dans notre cas)
+- Terminal / PowerShell
 
 ## Installation 
 
