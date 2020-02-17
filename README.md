@@ -47,5 +47,5 @@ http://localhost:3000/api
 {"message":"Hello World"}
 ```
 
-- Le test est aussi valable avec le /status, qui cette fois-ci nous renverra une page spécifique de l'API :
+- Le test est aussi valable avec le /status, qui cette fois nous renvoie une page spécifique de l'API :
 > URL : http://localhost:3000/api/status
