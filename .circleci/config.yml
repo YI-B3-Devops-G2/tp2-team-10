@@ -1,0 +1,82 @@
+# Javascript Node CircleCI 2.0 configuration file
+version: 2.1
+
+executors:
+  publisher:
+    docker:
+      - image: circleci/node:10
+
+jobs:
+  install:
+    executor: publisher
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: 
+              npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  test_phase: 
+    executor: publisher
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-dependencies-{{ checksum "package.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-dependencies-
+      - run:
+          name: run test project
+          command:
+            npm run test -- --json --outputFile=/tmp/output.json
+
+      - store_artifacts:
+          path: /tmp/output.json
+
+  build_image:
+    executor: publisher
+    steps:
+      - checkout
+      - setup_remote_docker # Ask circleci new Docker Engine to build outside of container
+      - run:
+          name: Create symlink to Dockerfile
+          command: ln ./node/Dockerfile ./Dockerfile
+      - run:
+          name: build and tag the image
+          command: docker build -t htysn21/api:latest . --compress --force-rm --no-cache --pull
+      - run:
+          name: publish image to docker hub
+          command: |
+              echo "$DOCKER_HUB_PASS" | docker login docker.io -u "htysn21" --password-stdin
+              docker push htysn21/api:latest
+
+workflows:
+  version: 2
+  dev:
+    jobs:
+      - install:
+          filters:
+            branches:
+              only: master
+      - test_phase:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - build_image:
+          requires:
+            - test_phase
+          filters:
+            branches:
+              only: master
