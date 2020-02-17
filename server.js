@@ -10,7 +10,7 @@ const client = new Client({
     host: process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: 5432,
+    port: 6379,
 });
 
 client.connect().catch(e=>console.log(e));

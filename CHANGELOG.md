@@ -24,3 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modification de README.md
 - Modification de CHANGELOG.md
 - Modification de package.json
+- Modification de server.js (Port : 6379)
