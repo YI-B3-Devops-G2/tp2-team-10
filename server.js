@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require('express');
-const app = express();
-const { Client } = require('pg');
-const redis = require('redis');
+const express = require('express')
+const app = express()
+const { Client } = require('pg')
+const redis = require('redis')
 
 const client = new Client({
     user: process.env.DB_USER,
