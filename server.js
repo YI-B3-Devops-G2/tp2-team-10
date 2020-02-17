@@ -1,29 +1,16 @@
 'use strict';
 
 const express = require('express');
+
+// Constants
+const PORT = 8080;
+const HOST = '0.0.0.0';
+
+// App
 const app = express();
-const { Client } = require('pg');
-const redis = require('redis');
-
-const client = new Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: 6379,
-});
-
-client.connect().catch(e=>console.log(e));
-
-//client redis
-const redisClient = redis.createClient({ host: process.env.REDIS_HOST });
-redisClient.on('connect', function() {
-    console.log('client redis connect');
-});
-
-app.get('/api', function(req, res) {
-    res.json("hello world");
-});
+app.get('/api', (req, res) => {
+    res.json('Hello World')
+})
 
 app.get('/status', async function(req, res) {
 
@@ -48,7 +35,8 @@ app.get('/status', async function(req, res) {
     });
 });
 
-// start the app
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
 app.listen(3000, function () {
     console.log("Express is running on port 3000");
 });
