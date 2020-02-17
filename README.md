@@ -24,7 +24,7 @@ Github_username: Madhous<br>
 ## Installation 
 
 - Télécharger le .zip
-- Dans un terminal se déplacer dans tp-team-10
+- Dans un terminal se déplacer dans tp2-team-10
 - Taper dans le terminal la commande suivante :
 ```
 docker pull htysn21/api:latest
